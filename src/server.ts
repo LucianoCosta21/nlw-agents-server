@@ -4,9 +4,12 @@ import {
   validatorCompiler, 
   type ZodTypeProvider } from "fastify-type-provider-zod"
 
-  import { fastifyCors} from "@fastify/cors"
+import { fastifyCors} from "@fastify/cors"
 import { env } from "./env.ts";
 import { getRoomsRoute } from "./http/routes/get-rooms.ts";
+import {createRoomRoute } from "./http/routes/create-room.ts";
+import { getRoomsQuestions } from "./http/routes/get-room-questions.ts";
+import { createQuestionRoute } from "./http/routes/create-question.ts";
 
   const app = fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -21,6 +24,9 @@ import { getRoomsRoute } from "./http/routes/get-rooms.ts";
     return 'OK'
   })
   app.register(getRoomsRoute)
+  app.register(createRoomRoute)
+  app.register(getRoomsQuestions)
+  app.register(createQuestionRoute)
 
   app.listen({port: env.PORT}).then(() => {
     console.log(`Port: ${process.env.PORT}`)
